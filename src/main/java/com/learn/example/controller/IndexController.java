@@ -32,11 +32,12 @@ public class IndexController {
 	@RequestMapping( value = "/login" , method = RequestMethod.POST)
 	public String validateLogin( @RequestParam String username, @RequestParam String password ) {
 		
-		if( service.login(username,password)) {
+		/*if( service.login(username,password)) {
 			return "/view/success.jsp";
 		} else {
 			return "/view/error.jsp";
-		}
+		}*/
+        return "";
 	}
 		
 }

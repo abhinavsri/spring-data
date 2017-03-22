@@ -1,13 +1,24 @@
 package com.learn.example.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table( name = "user_table" )
 public class User {
-	private String username;
-	
-	public Long getId() {
+
+    @Id
+    @GeneratedValue( strategy = GenerationType.AUTO )
+    private Long id;
+
+    private String username;
+    private String password;
+
+    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "user")
+    private Set<Car> carSet;
+
+
+    public Long getId() {
 		return id;
 	}
 	public String getUsername() {
@@ -16,22 +27,29 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getPassword() {
+
+    public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public void setId(Long id) {
+
+    public void setId(Long id) {
 		this.id = id;
 	}
-	private String password;
-	@Id
-	@GeneratedValue( strategy = GenerationType.AUTO )
-	private Long id;
 
 
-   public  User(String username,String password){
+
+    public Set<Car> getCarSet() {
+        return carSet;
+    }
+
+    public void setCarSet(Set<Car> carSet) {
+        this.carSet = carSet;
+    }
+
+    public  User(String username, String password){
         this.username=username;
         this.password=password;
     }

@@ -79,7 +79,7 @@ public class UserRepositoryIntegrationtest {
     @Test
     public void findUser() {
 
-        User result = userRepository.findUserByUsernameAndPassword("Stefan","Lassard");
+        User result = userRepository.findUserByUsernameAndPassword("Stefan", "Lassard");
 
         assertThat(result, is(notNullValue()));
         assertThat(result.getUsername(), is("Stefan"));
