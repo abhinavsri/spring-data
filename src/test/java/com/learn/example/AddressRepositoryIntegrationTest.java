@@ -24,8 +24,8 @@ import java.util.Iterator;
 import java.util.List;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {BasicConfig.class})
+    @RunWith(SpringJUnit4ClassRunner.class)
+    @ContextConfiguration(classes = {BasicConfig.class})
 public class AddressRepositoryIntegrationTest {
     @Autowired
     AddressRepository addressRepository;
