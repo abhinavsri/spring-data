@@ -5,7 +5,7 @@ import java.util.Set;
 
 @Entity
 @NamedQuery(name = "User.findByFirstname", query = "SELECT user FROM User user WHERE user.firstName = 'firstName'")
-@Table( name = "user_table" )
+@Table( name = "user" )
 public class User {
 
     @Id
@@ -18,7 +18,7 @@ public class User {
     private String password;
 
     @OneToMany(cascade = {CascadeType.ALL},mappedBy = "user")
-    private Set<Car> carSet;
+    private Set<Goal> goalSet;
 
 
     public Long getId() {
@@ -58,12 +58,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Set<Car> getCarSet() {
-        return carSet;
+    public Set<Goal> getGoalSet() {
+        return goalSet;
     }
 
-    public void setCarSet(Set<Car> carSet) {
-        this.carSet = carSet;
+    public void setGoalSet(Set<Goal> goalSet) {
+        this.goalSet = goalSet;
     }
 
     public  User(String username, String password){

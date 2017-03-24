@@ -2,9 +2,9 @@ package com.learn.example;
 
 
 import com.learn.example.config.BasicConfig;
-import com.learn.example.model.Car;
+import com.learn.example.model.Goal;
 import com.learn.example.model.User;
-import com.learn.example.repository.CarRepository;
+import com.learn.example.repository.GoalRepository;
 import com.learn.example.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,12 +21,12 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {BasicConfig.class})
-public class CarRepositoryIntegrationTest {
+public class GoalRepositoryIntegrationTest {
     @Autowired
     UserRepository userRepository;
 
     @Autowired
-    CarRepository carRepository;
+    GoalRepository goalRepository;
 
     @Test
     public void save() {
@@ -36,9 +36,9 @@ public class CarRepositoryIntegrationTest {
         userList.add(userRepository.findFirstByUsernameAndPassword("Nakul", "Ashish"));
 
         for (User user : userList) {
-            carRepository.save(new Car(user, "Sedan"));
-            carRepository.save(new Car(user, "SUV"));
-            carRepository.save(new Car(user, "Sports"));
+            goalRepository.save(new Goal("Sedan",user));
+            goalRepository.save(new Goal("SUV",user));
+            goalRepository.save(new Goal( "Sports",user));
         }
 
 
@@ -47,7 +47,7 @@ public class CarRepositoryIntegrationTest {
     @Test
     public void find() {
         User ali=userRepository.findFirstByUsernameAndPassword("Ali", "Tanwir");
-        List<Car> cars = carRepository.findByUser(ali);
+        List<Goal> goals = goalRepository.findByUser(ali);
 
         assertThat(ali, is(notNullValue()));
         assertThat(ali.getId(), is(notNullValue()));
@@ -56,9 +56,9 @@ public class CarRepositoryIntegrationTest {
 
 
 
-        assertThat(cars.size(), is(2));
-        assertThat(cars.get(0).getModel(), is("Sedan"));
-        assertThat(cars.get(1).getModel(), is("SUV"));
+        assertThat(goals.size(), is(2));
+        assertThat(goals.get(0).getName(), is("Sedan"));
+        assertThat(goals.get(1).getName(), is("SUV"));
 
 
 

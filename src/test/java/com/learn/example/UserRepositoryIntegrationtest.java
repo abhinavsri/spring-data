@@ -5,9 +5,9 @@ import com.learn.example.config.BasicConfig;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.*;
 
-import com.learn.example.model.Car;
+import com.learn.example.model.Goal;
 import com.learn.example.model.User;
-import com.learn.example.repository.CarRepository;
+import com.learn.example.repository.GoalRepository;
 import com.learn.example.repository.UserRepository;
 import com.learn.example.service.UserService;
 import com.learn.example.util.SearchDTO;
@@ -33,7 +33,7 @@ public class UserRepositoryIntegrationtest {
     UserRepository userRepository;
 
     @Autowired
-    CarRepository carRepository;
+    GoalRepository goalRepository;
 
     @Autowired
     UserService userService;
@@ -43,9 +43,9 @@ public class UserRepositoryIntegrationtest {
 
     @Test
     public void savesNewUser() {
+        List<User> userList;
 
         User user = new User("Stefan", "Lassard");
-        List<User> userList;
         User akash = new User("Akash", "Katiyar");
         User ali = new User("Nakul", "Ashish");
         User nakul = new User("Ali", "Tanwir");
@@ -88,8 +88,9 @@ public class UserRepositoryIntegrationtest {
     @Test
     public void findAll() {
         List<User> userList = userRepository.findUsersByUsernameAndPassword("Ali", "Tanwir");
-//        List<User> userList = userRepository.findAll();
-//        assertThat(userList, is(notNullValue()));
+
+
+        assertThat(userList, is(notNullValue()));
         assertThat(userList.size(), is(3));
 
     }
@@ -117,9 +118,9 @@ public class UserRepositoryIntegrationtest {
     @Test
     public void findInCars() {
 
-        Page<Car> pages = carRepository.findAll(new PageRequest(0, 2));
-        List<Car> cars = pages.getContent();
-        List<User> userList = userRepository.findByCarSetIn(cars);
+        Page<Goal> pages = goalRepository.findAll(new PageRequest(0, 2));
+        List<Goal> cars = pages.getContent();
+        List<User> userList = userRepository.findByGoalSetIn(cars);
         System.out.println("---------------------------------------" + cars);
         System.out.println("---------------------------------------" + cars.size());
         System.out.println("---------------------------------------" + userList);
