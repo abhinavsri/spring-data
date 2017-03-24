@@ -7,7 +7,9 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 
 import com.learn.example.model.Address;
+import com.learn.example.model.User;
 import com.learn.example.repository.AddressRepository;
+import com.learn.example.repository.UserRepository;
 import org.junit.Test;
 
 import org.junit.runner.RunWith;
@@ -30,30 +32,20 @@ public class AddressRepositoryIntegrationTest {
     @Autowired
     AddressRepository addressRepository;
 
-    @Test
-    public void saveAddress() {
-        List<Address> addressList = new ArrayList<Address>();
-//        addressList.add(new Address("Dalal Street", "Mumbai", "India"));
-//        addressList.add(new Address("Cannought Palace", "Delhi", "India"));
-//        addressList.add(new Address("Andheri", "Mumbai", "India"));
-//        addressList.add(new Address("India Gate", "Delhi", "India"));
-//        addressList.add(new Address("Juhu", "Mumbai", "India"));
-
-        addressRepository.save(addressList);
-
-    }
+    @Autowired
+    UserRepository userRepository;
 
     @Test
     public void pagination() {
-        Page<Address> addressPage = addressRepository.findAll(new PageRequest(1, 2));
+        int offset = 1;
+        int max = 2;
+
+        Page<Address> addressPage = addressRepository.findAll(new PageRequest(offset, max));
 
         List<Address> addressList = addressPage.getContent();
-        for (Address address : addressList) {
-            System.out.println("adress street=====" + address.getStreet());
-        }
 
-        assertThat(addressPage.getTotalElements(), is(10L));
-        assertThat(addressPage.getTotalPages(), is(5));
+        assertThat(addressPage.getTotalElements(), is(4L));
+        assertThat(addressPage.getTotalPages(), is(2));
         assertThat(addressList.size(), is(2));
 
     }
@@ -64,13 +56,20 @@ public class AddressRepositoryIntegrationTest {
 
         List<Address> addressList = addressPage.getContent();
 
-        assertThat(addressPage.getTotalElements(), is(10L));
-        assertThat(addressPage.getTotalPages(), is(5));
+        assertThat(addressPage.getTotalElements(), is(4L));
+        assertThat(addressPage.getTotalPages(), is(2));
         assertThat(addressList.size(), is(2));
         assertThat(addressList.get(0).getStreet(), is("Andheri"));
-//        assertThat(addressList.get(1).getStreet(), is("Cannought Palace"));
-
     }
 
+    @Test
+    public void association() {
+        User user = userRepository.findByUsername("akash@fintechlabs.in");
+        Address address = addressRepository.findByUser(user);
 
+        assertThat(address.getCity(), is("Mumbai"));
+        assertThat(address.getCountry(), is("India"));
+        assertThat(address.getStreet(), is("Cannought Palace"));
+        assertThat(address.getUser(), is(user));
+    }
 }

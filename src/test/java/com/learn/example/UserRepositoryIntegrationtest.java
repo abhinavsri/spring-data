@@ -40,7 +40,7 @@ public class UserRepositoryIntegrationtest {
     UserService userService;
 
 
-    private static final String USERNAME = "Stefan";
+    private static final String USERNAME = "stefan@fintechlabs.in";
     private static final String PASSWORD = "123456";
     private static final String FIRST_NAME = "Stefan";
     private static final String LAST_NAME = "Lassard";
