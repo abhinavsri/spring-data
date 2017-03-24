@@ -30,7 +30,23 @@ public class GoalRepositoryIntegrationTest {
     GoalRepository goalRepository;
 
     @Test
-    public void find() {
+    public void findOne() {
+        User stephen = userRepository.findOne(3L);
+        List<Goal> goals = goalRepository.findByUser(stephen);
+
+        assertThat(stephen, is(notNullValue()));
+        assertThat(stephen.getId(), is(notNullValue()));
+        assertThat(stephen.getUsername(), is("Stefan@fintechlabs.in"));
+        assertThat(stephen.getPassword(), is("123456"));
+
+        assertThat(goals.size(), is(3));
+        assertThat(goals.get(0).getName(), is(Constants.WEEKLY_GOAL));
+        assertThat(goals.get(1).getName(), is(Constants.MONTHLY_GOAL));
+        assertThat(goals.get(2).getName(), is(Constants.QUARTERLY_GOAL));
+    }
+
+    @Test
+    public void findByUser() {
         User ali = userRepository.findByUsername("Stefan@fintechlabs.in");
         List<Goal> goals = goalRepository.findByUser(ali);
 
