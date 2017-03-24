@@ -43,25 +43,29 @@ public class BootStrap implements InitializingBean {
             System.out.println("=====================ajskdkajshdk");
             createUser();
         }
-        if(addressRepository.findAll().isEmpty()){
-            createAddress();
-        }
+      
 
 
     }
 
     public void createUser() {
         List<User> userList = new ArrayList<User>();
-        User ali = new User("Ali@fintechlabs.in", "123456","Ali","Katiyar");
-        User user = new User("Stefan@fintechlabs.in", "123456","Stefan","Lassard");
-        User akash = new User("Akash@fintechlabs.in","123456","Akash", "Katiyar");
-        User nakul = new User("Nakul@fintechlabs.in","123456", "Ashish","Nakul");
+        User ali = new User("Ali@fintechlabs.in", "123456", "Ali", "Katiyar");
+        User user = new User("Stefan@fintechlabs.in", "123456", "Stefan", "Lassard");
+        User akash = new User("Akash@fintechlabs.in", "123456", "Akash", "Katiyar");
+        User nakul = new User("Nakul@fintechlabs.in", "123456", "Ashish", "Nakul");
         userList.add(userRepository.save(ali));
         userList.add(userRepository.save(akash));
         userList.add(userRepository.save(user));
         userList.add(userRepository.save(nakul));
 
         createGoals(userList);
+
+
+        createAddress(ali);
+        createAddress(user);
+        createAddress(akash);
+        createAddress(nakul);
     }
 
     public void createGoals(List<User> userList) {
@@ -74,14 +78,14 @@ public class BootStrap implements InitializingBean {
         }
     }
 
-    public void createAddress(){
+    public void createAddress(User user) {
         List<Address> addressList = new ArrayList<Address>();
-        addressList.add(new Address("Dalal Street", "Mumbai", "India"));
-        addressList.add(new Address("Cannought Palace", "Delhi", "India"));
-        addressList.add(new Address("Andheri", "Mumbai", "India"));
-        addressList.add(new Address("India Gate", "Delhi", "India"));
-        addressList.add(new Address("Juhu", "Mumbai", "India"));
-
+        addressList.add(new Address("Dalal Street", "Mumbai", "India",user));
+        addressList.add(new Address("Cannought Palace", "Delhi", "India",user));
+        addressList.add(new Address("Andheri", "Mumbai", "India",user));
+        addressList.add(new Address("India Gate", "Delhi", "India",user));
+        addressList.add(new Address("Juhu", "Mumbai", "India",user));
         addressRepository.save(addressList);
+
     }
 }
