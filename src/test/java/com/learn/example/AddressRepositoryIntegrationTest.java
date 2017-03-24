@@ -24,8 +24,8 @@ import java.util.Iterator;
 import java.util.List;
 
 
-    @RunWith(SpringJUnit4ClassRunner.class)
-    @ContextConfiguration(classes = {BasicConfig.class})
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {BasicConfig.class})
 public class AddressRepositoryIntegrationTest {
     @Autowired
     AddressRepository addressRepository;
@@ -33,11 +33,11 @@ public class AddressRepositoryIntegrationTest {
     @Test
     public void saveAddress() {
         List<Address> addressList = new ArrayList<Address>();
-        addressList.add(new Address("Dalal Street", "Mumbai", "India"));
-        addressList.add(new Address("Cannought Palace", "Delhi", "India"));
-        addressList.add(new Address("Andheri", "Mumbai", "India"));
-        addressList.add(new Address("India Gate", "Delhi", "India"));
-        addressList.add(new Address("Juhu", "Mumbai", "India"));
+//        addressList.add(new Address("Dalal Street", "Mumbai", "India"));
+//        addressList.add(new Address("Cannought Palace", "Delhi", "India"));
+//        addressList.add(new Address("Andheri", "Mumbai", "India"));
+//        addressList.add(new Address("India Gate", "Delhi", "India"));
+//        addressList.add(new Address("Juhu", "Mumbai", "India"));
 
         addressRepository.save(addressList);
 
@@ -48,8 +48,8 @@ public class AddressRepositoryIntegrationTest {
         Page<Address> addressPage = addressRepository.findAll(new PageRequest(1, 2));
 
         List<Address> addressList = addressPage.getContent();
-        for(Address address:addressList){
-            System.out.println("adress street====="+address.getStreet());
+        for (Address address : addressList) {
+            System.out.println("adress street=====" + address.getStreet());
         }
 
         assertThat(addressPage.getTotalElements(), is(10L));
@@ -57,9 +57,10 @@ public class AddressRepositoryIntegrationTest {
         assertThat(addressList.size(), is(2));
 
     }
+
     @Test
     public void sorting() {
-        Page<Address> addressPage = addressRepository.findAll(new PageRequest(0, 2,new Sort(Sort.Direction.ASC,"street")));
+        Page<Address> addressPage = addressRepository.findAll(new PageRequest(0, 2, new Sort(Sort.Direction.ASC, "street")));
 
         List<Address> addressList = addressPage.getContent();
 

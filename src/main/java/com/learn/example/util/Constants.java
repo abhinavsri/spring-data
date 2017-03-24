@@ -6,5 +6,5 @@ package com.learn.example.util;
 public class Constants {
     public static final String WEEKLY_GOAL="Weekly";
     public static final String MONTHLY_GOAL="Monthly";
-    public static final String QUATERLEY_GOAL="Quaterly";
+    public static final String QUARTERLY_GOAL="Quaterly";
 }

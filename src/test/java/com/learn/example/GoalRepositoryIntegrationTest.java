@@ -6,6 +6,7 @@ import com.learn.example.model.Goal;
 import com.learn.example.model.User;
 import com.learn.example.repository.GoalRepository;
 import com.learn.example.repository.UserRepository;
+import com.learn.example.util.Constants;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,40 +30,19 @@ public class GoalRepositoryIntegrationTest {
     GoalRepository goalRepository;
 
     @Test
-    public void save() {
-        List<User> userList = new ArrayList<User>();
-        userList.add(userRepository.findFirstByUsernameAndPassword("Ali", "Tanwir"));
-        userList.add(userRepository.findFirstByUsernameAndPassword("Akash", "Katiyar"));
-        userList.add(userRepository.findFirstByUsernameAndPassword("Nakul", "Ashish"));
-
-        for (User user : userList) {
-            goalRepository.save(new Goal("Sedan",user));
-            goalRepository.save(new Goal("SUV",user));
-            goalRepository.save(new Goal( "Sports",user));
-        }
-
-
-    }
-
-    @Test
     public void find() {
-        User ali=userRepository.findFirstByUsernameAndPassword("Ali", "Tanwir");
+        User ali = userRepository.findByUsername("Stefan@fintechlabs.in");
         List<Goal> goals = goalRepository.findByUser(ali);
 
         assertThat(ali, is(notNullValue()));
         assertThat(ali.getId(), is(notNullValue()));
-        assertThat(ali.getUsername(), is("Ali"));
-        assertThat(ali.getPassword(), is("Tanwir"));
+        assertThat(ali.getUsername(), is("Stefan@fintechlabs.in"));
+        assertThat(ali.getPassword(), is("123456"));
 
-
-
-        assertThat(goals.size(), is(2));
-        assertThat(goals.get(0).getName(), is("Sedan"));
-        assertThat(goals.get(1).getName(), is("SUV"));
-
-
-
+        assertThat(goals.size(), is(3));
+        assertThat(goals.get(0).getName(), is(Constants.WEEKLY_GOAL));
+        assertThat(goals.get(1).getName(), is(Constants.MONTHLY_GOAL));
+        assertThat(goals.get(3).getName(), is(Constants.QUARTERLY_GOAL));
     }
-
 
 }

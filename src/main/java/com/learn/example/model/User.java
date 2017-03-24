@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@NamedQuery(name = "User.findByFirstname", query = "SELECT user FROM User user WHERE user.firstName = 'firstName'")
+@NamedQuery(name = "User.findByFirstname", query = "SELECT user FROM User user WHERE user.firstName = ?1")
 @Table(name = "user")
 public class User {
 

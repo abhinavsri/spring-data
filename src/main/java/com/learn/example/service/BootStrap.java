@@ -73,7 +73,7 @@ public class BootStrap implements InitializingBean {
         for (User user : userList) {
             goalRepository.save(new Goal(Constants.WEEKLY_GOAL, user));
             goalRepository.save(new Goal(Constants.MONTHLY_GOAL, user));
-            goalRepository.save(new Goal(Constants.QUATERLEY_GOAL, user));
+            goalRepository.save(new Goal(Constants.QUARTERLY_GOAL, user));
 
         }
     }
