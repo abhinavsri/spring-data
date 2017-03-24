@@ -3,6 +3,7 @@ package com.learn.example;
 import com.learn.example.config.BasicConfig;
 
 import static org.hamcrest.core.IsNull.notNullValue;
+import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.*;
 
 import com.learn.example.model.Goal;
@@ -39,20 +40,15 @@ public class UserRepositoryIntegrationtest {
     UserService userService;
 
 
+    private static final String USERNAME = "Stefan";
+    private static final String PASSWORD = "123456";
     private static final String FIRST_NAME = "Stefan";
+    private static final String LAST_NAME = "Lassard";
 
     @Test
-    public void savesNewUser() {
-        List<User> userList;
-
-        User ali = new User("Ali@fintechlabs.in", "123456","Ali","Katiyar");
-        User user = new User("Stefan@fintechlabs.in", "123456","Stefan","Lassard");
-        User akash = new User("Akash@fintechlabs.in","123456","Akash", "Katiyar");
-        User nakul = new User("Nakul@fintechlabs.in","123456", "Ashish","Nakul");
+    public void save() {
+        User user = new User(USERNAME, PASSWORD, FIRST_NAME, LAST_NAME);
         User result = userRepository.save(user);
-        userRepository.save(akash);
-        userRepository.save(ali);
-        userRepository.save(nakul);
 
         assertThat(result, is(notNullValue()));
         assertThat(result.getId(), is(notNullValue()));
@@ -62,10 +58,9 @@ public class UserRepositoryIntegrationtest {
 
     @Test
     public void updateuser() {
-        User user = userRepository.findOne(2L);
+        User user = userRepository.findByUsername(USERNAME);
         user.setPassword("Butler");
         user = userRepository.save(user);
-
 
         assertThat(user, is(notNullValue()));
         assertThat(user.getId(), is(notNullValue()));
@@ -75,58 +70,42 @@ public class UserRepositoryIntegrationtest {
 
 
     @Test
-    public void deleteUser() {
-        userRepository.delete(2L);
+    public void delete() {
+        User user = userRepository.findByUsername(USERNAME);
+        userRepository.delete(user.getId());
+
+        assertThat(userRepository.findByUsername(USERNAME), is(nullValue()));
     }
 
     @Test
-    public void deleteUsers() {
+    public void deleteAll() {
         Iterable<User> userIterable = userRepository.findAll();
         userRepository.delete(userIterable);
+
+        assertThat(userRepository.findAll().isEmpty(), is(true));
     }
 
-    @Test
-    public void findAll() {
-        List<User> userList = userRepository.findUsersByUsernameAndPassword("Ali@fintechlabs.in", "123456");
+    /*@Test
+    public void findFirstUserByPassword() {
+        List<User> results = userRepository.findFirstByPassword("123456");
+        User user = results.get(0);
 
-
-        assertThat(userList, is(notNullValue()));
-        assertThat(userList.size(), is(3));
-
+        assertThat(results, is(notNullValue()));
+        assertThat(results.size(), is(1));
+        assertThat(user.getUsername(), is("Ali"));
+        assertThat(user.getPassword(), is("Tanwir"));
     }
-
-    @Test
-    public void findUser() {
-
-        User result = userRepository.findFirstByUsernameAndPassword("Stefan@fintechlabs.in", "123456");
-
-        assertThat(result, is(notNullValue()));
-        assertThat(result.getUsername(), is("Stefan"));
-        assertThat(result.getPassword(), is("Lassard"));
-    }
-
+*/
     @Test
     public void findInList() {
-        List<Long> userIdList = new ArrayList<Long>();
-        userIdList.add(1L);
-        userIdList.add(2L);
-        List<User> userList = userRepository.findUsersByIdIn(userIdList);
-        System.out.println("---------------------------------------" + userList);
-        System.out.println("---------------------------------------" + userList.size());
+        List<String> userIdList = new ArrayList<String>();
+        userIdList.add("Ali");
+        userIdList.add("Akash");
+        List<User> userList = userRepository.findUsersByFirstNameIn(userIdList);
+
+        assertThat(userList, is(notNullValue()));
+        assertThat(userList.size(), is(2));
     }
-
-    @Test
-    public void findInCars() {
-
-        Page<Goal> pages = goalRepository.findAll(new PageRequest(0, 2));
-        List<Goal> cars = pages.getContent();
-        List<User> userList = userRepository.findByGoalSetIn(cars);
-        System.out.println("---------------------------------------" + cars);
-        System.out.println("---------------------------------------" + cars.size());
-        System.out.println("---------------------------------------" + userList);
-        System.out.println("---------------------------------------" + userList.size());
-    }
-
 
     @Test
     public void searchWhenSearchTypeIsMethodName() {

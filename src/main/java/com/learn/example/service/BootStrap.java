@@ -52,7 +52,7 @@ public class BootStrap implements InitializingBean {
 
     public void createUser() {
         List<User> userList = new ArrayList<User>();
-        User ali = new User("Ali@fintechlabs.in", "123456","Ali","Katiyar");
+        User ali = new User("Ali@fintechlabs.in", "123456","Ali","Tanwir");
         User user = new User("Stefan@fintechlabs.in", "123456","Stefan","Lassard");
         User akash = new User("Akash@fintechlabs.in","123456","Akash", "Katiyar");
         User nakul = new User("Nakul@fintechlabs.in","123456", "Ashish","Nakul");
@@ -69,7 +69,7 @@ public class BootStrap implements InitializingBean {
         for (User user : userList) {
             goalRepository.save(new Goal(Constants.WEEKLY_GOAL, user));
             goalRepository.save(new Goal(Constants.MONTHLY_GOAL, user));
-            goalRepository.save(new Goal(Constants.QUATERLEY_GOAL, user));
+            goalRepository.save(new Goal(Constants.QUARTERLY_GOAL, user));
 
         }
     }

@@ -7,15 +7,16 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+
 @org.springframework.stereotype.Repository
 public interface UserRepository extends CrudRepository<User, Long> {
     List<User> findAll();
 
-    List<User> findUsersByUsernameAndPassword(String u, String p);
+    User findByUsername(String username);
 
-    User findFirstByUsernameAndPassword(String u, String p);
+//    List<User> findFirstByPassword(String p);
 
-    List<User> findUsersByIdIn(List<Long> userIdList);
+    List<User> findUsersByFirstNameIn(List<String> userIdList);
 
     User findByFirstName(String firstName);
 
