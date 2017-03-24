@@ -1,22 +1,25 @@
 package com.learn.example.model;
 
+import com.learn.example.model.User;
+
 import java.io.Serializable;
 import java.util.Set;
-
 
 
 import javax.persistence.*;
 
 @Entity
-public class Car implements Serializable {
+@Table(name = "goal")
+
+public class Goal implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String model;
+    private String name;
 
     @ManyToOne
     private User user;
@@ -29,15 +32,16 @@ public class Car implements Serializable {
         this.id = id;
     }
 
-    public String getModel() {
-        return model;
+    public String getName() {
+        return name;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Car() { }
+    public Goal() {
+    }
 
     public User getUser() {
         return user;
@@ -47,8 +51,8 @@ public class Car implements Serializable {
         this.user = user;
     }
 
-    public Car(User user, String model) {
+    public Goal(String name, User user) {
         this.user = user;
-        this.model = model;
+        this.name = name;
     }
 }

@@ -2,9 +2,7 @@ package com.learn.example.util;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-/**
- * Created by nexthoughts on 24/3/17.
- */
+
 public class SearchDTO {
     private String searchTerm;
 

@@ -1,21 +1,22 @@
 package com.learn.example.repository;
 
-import com.learn.example.model.Car;
 import com.learn.example.model.User;
+import com.learn.example.model.Goal;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Repository;
 //import com.learn.example.model.User;
 
 import java.util.List;
 
+@Repository("goalRepository")
+public interface GoalRepository extends BaseRepository<Goal, Long> {
 
-public interface CarRepository extends BaseRepository<Car, Long> {
+    List<Goal> findByName(String name);
 
-    List<Car> findByModel(String model);
+    List<Goal> findByUser(User user);
 
-    List<Car> findByUser(User user);
-
-    Page<Car> findAll(Pageable pageable);
+    Page<Goal> findAll(Pageable pageable);
 }
