@@ -39,14 +39,15 @@ public class BootStrap implements InitializingBean {
             createUser();
         }
 
+
     }
 
     public void createUser() {
         List<User> userList = new ArrayList<User>();
-        User ali = new User("Ali", "Tanwir");
-        User user = new User("Stefan", "Lassard");
-        User akash = new User("Akash", "Katiyar");
-        User nakul = new User("Nakul", "Ashish");
+        User ali = new User("Ali@fintechlabs.in", "123456","Ali","Katiyar");
+        User user = new User("Stefan@fintechlabs.in", "123456","Stefan","Lassard");
+        User akash = new User("Akash@fintechlabs.in","123456","Akash", "Katiyar");
+        User nakul = new User("Nakul@fintechlabs.in","123456", "Ashish","Nakul");
         userList.add(userRepository.save(ali));
         userList.add(userRepository.save(akash));
         userList.add(userRepository.save(user));

@@ -45,10 +45,10 @@ public class UserRepositoryIntegrationtest {
     public void savesNewUser() {
         List<User> userList;
 
-        User user = new User("Stefan", "Lassard");
-        User akash = new User("Akash", "Katiyar");
-        User ali = new User("Nakul", "Ashish");
-        User nakul = new User("Ali", "Tanwir");
+        User ali = new User("Ali@fintechlabs.in", "123456","Ali","Katiyar");
+        User user = new User("Stefan@fintechlabs.in", "123456","Stefan","Lassard");
+        User akash = new User("Akash@fintechlabs.in","123456","Akash", "Katiyar");
+        User nakul = new User("Nakul@fintechlabs.in","123456", "Ashish","Nakul");
         User result = userRepository.save(user);
         userRepository.save(akash);
         userRepository.save(ali);
@@ -87,7 +87,7 @@ public class UserRepositoryIntegrationtest {
 
     @Test
     public void findAll() {
-        List<User> userList = userRepository.findUsersByUsernameAndPassword("Ali", "Tanwir");
+        List<User> userList = userRepository.findUsersByUsernameAndPassword("Ali@fintechlabs.in", "123456");
 
 
         assertThat(userList, is(notNullValue()));
@@ -98,7 +98,7 @@ public class UserRepositoryIntegrationtest {
     @Test
     public void findUser() {
 
-        User result = userRepository.findFirstByUsernameAndPassword("Stefan", "Lassard");
+        User result = userRepository.findFirstByUsernameAndPassword("Stefan@fintechlabs.in", "123456");
 
         assertThat(result, is(notNullValue()));
         assertThat(result.getUsername(), is("Stefan"));
@@ -134,7 +134,7 @@ public class UserRepositoryIntegrationtest {
 
         User user = userService.search(searchCriteria);
 
-        assertEquals(user.getLastName(), FIRST_NAME);
+        assertEquals(user.getFirstName(), FIRST_NAME);
     }
 
     @Test
@@ -142,7 +142,7 @@ public class UserRepositoryIntegrationtest {
         SearchDTO searchCriteria = createSearchDTO(FIRST_NAME, SearchType.NAMED_QUERY);
         User user = userService.search(searchCriteria);
 
-        assertEquals(user.getLastName(), FIRST_NAME);
+        assertEquals(user.getFirstName(), FIRST_NAME);
     }
 
     @Test
@@ -150,7 +150,7 @@ public class UserRepositoryIntegrationtest {
         SearchDTO searchCriteria = createSearchDTO(FIRST_NAME, SearchType.QUERY_ANNOTATION);
         User user = userService.search(searchCriteria);
 
-        assertEquals(user.getLastName(), FIRST_NAME);
+        assertEquals(user.getFirstName(), FIRST_NAME);
     }
 
     private SearchDTO createSearchDTO(String searchTerm, SearchType searchType) {
