@@ -10,16 +10,16 @@ import java.util.List;
 
 @Repository
 
-public class AccountRepositoryImpl implements AccountRepositoryCustom{
+public class AccountRepositoryImpl implements AccountRepositoryCustom {
 
     @PersistenceContext
     EntityManager entityManager;
 
     @Override
-    public List<Account> getAccountsByName(String name){
-        Query query = entityManager.createNativeQuery("SELECT acc.* FROM spring_data.account as acc " +
-                "WHERE acc.name LIKE ?", Account.class);
-        query.setParameter(1, name + "%");
+    public List<Account> getAccountsByName(String name) {
+        Query query = entityManager.createQuery("SELECT acc FROM Account as acc WHERE acc.name LIKE:searchName" /*+
+                "WHERE acc.name LIKE ?"*/, Account.class);
+        query.setParameter("searchName", "%" + name + "%");
         return query.getResultList();
     }
 }
