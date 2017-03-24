@@ -1,7 +1,9 @@
 package com.learn.example.service;
 
+import com.learn.example.model.Address;
 import com.learn.example.model.Goal;
 import com.learn.example.model.User;
+import com.learn.example.repository.AddressRepository;
 import com.learn.example.repository.GoalRepository;
 import com.learn.example.repository.UserRepository;
 import com.learn.example.util.Constants;
@@ -27,6 +29,9 @@ public class BootStrap implements InitializingBean {
     @Autowired
     UserService userService;
 
+    @Autowired
+    AddressRepository addressRepository;
+
     private final Logger log = org.slf4j.LoggerFactory.getLogger(BootStrap.class);
 
     @Override
@@ -37,6 +42,9 @@ public class BootStrap implements InitializingBean {
         if (userRepository.findAll().isEmpty()) {
             System.out.println("=====================ajskdkajshdk");
             createUser();
+        }
+        if(addressRepository.findAll().isEmpty()){
+            createAddress();
         }
 
 
@@ -66,4 +74,14 @@ public class BootStrap implements InitializingBean {
         }
     }
 
+    public void createAddress(){
+        List<Address> addressList = new ArrayList<Address>();
+        addressList.add(new Address("Dalal Street", "Mumbai", "India"));
+        addressList.add(new Address("Cannought Palace", "Delhi", "India"));
+        addressList.add(new Address("Andheri", "Mumbai", "India"));
+        addressList.add(new Address("India Gate", "Delhi", "India"));
+        addressList.add(new Address("Juhu", "Mumbai", "India"));
+
+        addressRepository.save(addressList);
+    }
 }
