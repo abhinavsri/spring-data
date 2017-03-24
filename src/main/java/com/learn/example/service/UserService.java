@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class UserService {
-	@Autowired
+	/*@Autowired
 	UserRepository userDao;
 	
 	public boolean login( String  username, String password ) {
@@ -18,5 +18,5 @@ public class UserService {
 		if ( u.size() == 1 ) return true;
 		else return false;
 		
-	}
+	}*/
 }

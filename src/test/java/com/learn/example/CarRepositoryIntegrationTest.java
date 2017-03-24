@@ -31,13 +31,14 @@ public class CarRepositoryIntegrationTest {
     @Test
     public void save() {
         List<User> userList = new ArrayList<User>();
-        userList.add(userRepository.findUserByUsernameAndPassword("Ali", "Tanwir"));
-        userList.add(userRepository.findUserByUsernameAndPassword("Akash", "Katiyar"));
-        userList.add(userRepository.findUserByUsernameAndPassword("Nakul", "Ashish"));
+        userList.add(userRepository.findFirstByUsernameAndPassword("Ali", "Tanwir"));
+        userList.add(userRepository.findFirstByUsernameAndPassword("Akash", "Katiyar"));
+        userList.add(userRepository.findFirstByUsernameAndPassword("Nakul", "Ashish"));
 
         for (User user : userList) {
             carRepository.save(new Car(user, "Sedan"));
             carRepository.save(new Car(user, "SUV"));
+            carRepository.save(new Car(user, "Sports"));
         }
 
 
@@ -45,7 +46,7 @@ public class CarRepositoryIntegrationTest {
 
     @Test
     public void find() {
-        User ali=userRepository.findUserByUsernameAndPassword("Ali", "Tanwir");
+        User ali=userRepository.findFirstByUsernameAndPassword("Ali", "Tanwir");
         List<Car> cars = carRepository.findByUser(ali);
 
         assertThat(ali, is(notNullValue()));
