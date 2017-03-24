@@ -9,6 +9,9 @@ import com.learn.example.model.Car;
 import com.learn.example.model.User;
 import com.learn.example.repository.CarRepository;
 import com.learn.example.repository.UserRepository;
+import com.learn.example.service.UserService;
+import com.learn.example.util.SearchDTO;
+import com.learn.example.util.SearchType;
 import org.junit.Test;
 
 import org.junit.runner.RunWith;
@@ -31,6 +34,12 @@ public class UserRepositoryIntegrationtest {
 
     @Autowired
     CarRepository carRepository;
+
+    @Autowired
+    UserService userService;
+
+
+    private static final String FIRST_NAME = "Stefan";
 
     @Test
     public void savesNewUser() {
@@ -109,11 +118,46 @@ public class UserRepositoryIntegrationtest {
     public void findInCars() {
 
         Page<Car> pages = carRepository.findAll(new PageRequest(0, 2));
-        List<Car> cars=pages.getContent();
+        List<Car> cars = pages.getContent();
         List<User> userList = userRepository.findByCarSetIn(cars);
         System.out.println("---------------------------------------" + cars);
         System.out.println("---------------------------------------" + cars.size());
         System.out.println("---------------------------------------" + userList);
         System.out.println("---------------------------------------" + userList.size());
     }
+
+
+    @Test
+    public void searchWhenSearchTypeIsMethodName() {
+        SearchDTO searchCriteria = createSearchDTO(FIRST_NAME, SearchType.METHOD_NAME);
+
+        User user = userService.search(searchCriteria);
+
+        assertEquals(user.getLastName(), FIRST_NAME);
+    }
+
+    @Test
+    public void searchWhenSearchTypeIsNamedQuery() {
+        SearchDTO searchCriteria = createSearchDTO(FIRST_NAME, SearchType.NAMED_QUERY);
+        User user = userService.search(searchCriteria);
+
+        assertEquals(user.getLastName(), FIRST_NAME);
+    }
+
+    @Test
+    public void searchWhenSearchTypeIsQueryAnnotation() {
+        SearchDTO searchCriteria = createSearchDTO(FIRST_NAME, SearchType.QUERY_ANNOTATION);
+        User user = userService.search(searchCriteria);
+
+        assertEquals(user.getLastName(), FIRST_NAME);
+    }
+
+    private SearchDTO createSearchDTO(String searchTerm, SearchType searchType) {
+        SearchDTO searchCriteria = new SearchDTO();
+        searchCriteria.setSearchTerm(searchTerm);
+        searchCriteria.setSearchType(searchType);
+        return searchCriteria;
+    }
+
+
 }

@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@NamedQuery(name = "User.findByFirstname", query = "SELECT user FROM User user WHERE user.firstName = 'firstName'")
 @Table( name = "user_table" )
 public class User {
 
@@ -11,6 +12,8 @@ public class User {
     @GeneratedValue( strategy = GenerationType.AUTO )
     private Long id;
 
+    private String firstName;
+    private String lastName;
     private String username;
     private String password;
 
@@ -39,7 +42,21 @@ public class User {
 		this.id = id;
 	}
 
+    public String getFirstName() {
+        return firstName;
+    }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
     public Set<Car> getCarSet() {
         return carSet;
