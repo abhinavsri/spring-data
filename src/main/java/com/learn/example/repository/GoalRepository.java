@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository("goalRepository")
+@Repository()
 public interface GoalRepository extends BaseRepository<Goal, Long> {
 
     List<Goal> findByName(String name);

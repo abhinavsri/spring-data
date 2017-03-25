@@ -44,19 +44,23 @@ public class AddressRepositoryIntegrationTest {
 
         List<Address> addressList = addressPage.getContent();
 
-        assertThat(addressPage.getTotalElements(), is(4L));
+        //For three records
+        assertThat(addressPage.getTotalElements(), is(3L));
         assertThat(addressPage.getTotalPages(), is(2));
-        assertThat(addressList.size(), is(2));
+        assertThat(addressList.size(), is(1));
 
     }
 
     @Test
     public void sorting() {
-        Page<Address> addressPage = addressRepository.findAll(new PageRequest(0, 2, new Sort(Sort.Direction.ASC, "street")));
+        int offset = 0;
+        int max = 2;
+
+        Page<Address> addressPage = addressRepository.findAll(new PageRequest(offset, max, new Sort(Sort.Direction.ASC, "street")));
 
         List<Address> addressList = addressPage.getContent();
 
-        assertThat(addressPage.getTotalElements(), is(4L));
+        assertThat(addressPage.getTotalElements(), is(3L));
         assertThat(addressPage.getTotalPages(), is(2));
         assertThat(addressList.size(), is(2));
         assertThat(addressList.get(0).getStreet(), is("Andheri"));
@@ -67,7 +71,7 @@ public class AddressRepositoryIntegrationTest {
         User user = userRepository.findByUsername("akash@fintechlabs.in");
         Address address = addressRepository.findByUser(user);
 
-        assertThat(address.getCity(), is("Mumbai"));
+        assertThat(address.getCity(), is("Delhi"));
         assertThat(address.getCountry(), is("India"));
         assertThat(address.getStreet(), is("Cannought Palace"));
         assertThat(address.getUser(), is(user));
