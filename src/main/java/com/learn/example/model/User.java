@@ -17,7 +17,7 @@ public class User {
     private String username;
     private String password;
 
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user")
+    @OneToMany(cascade = {CascadeType.ALL},  orphanRemoval = true,mappedBy = "user")
     private Set<Goal> goalSet;
 
 
