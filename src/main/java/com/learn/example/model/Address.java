@@ -11,6 +11,17 @@ public class Address {
     private Long id;
     private String street, city, country;
 
+    @OneToOne
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }
@@ -46,9 +57,10 @@ public class Address {
     public Address() {
     }
 
-    public Address(String street, String city, String country) {
+    public Address(String street, String city, String country,User user) {
         this.street = street;
         this.city = city;
         this.country = country;
+        this.user=user;
     }
 }

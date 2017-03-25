@@ -6,8 +6,10 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.*;
 
+import com.learn.example.model.Address;
 import com.learn.example.model.Goal;
 import com.learn.example.model.User;
+import com.learn.example.repository.AddressRepository;
 import com.learn.example.repository.GoalRepository;
 import com.learn.example.repository.UserRepository;
 import com.learn.example.service.UserService;
@@ -39,8 +41,11 @@ public class UserRepositoryIntegrationtest {
     @Autowired
     UserService userService;
 
+    @Autowired
+    AddressRepository addressRepository;
 
-    private static final String USERNAME = "Stefan";
+
+    private static final String USERNAME = "stefan@fintechlabs.in";
     private static final String PASSWORD = "123456";
     private static final String FIRST_NAME = "Stefan";
     private static final String LAST_NAME = "Lassard";
@@ -52,8 +57,8 @@ public class UserRepositoryIntegrationtest {
 
         assertThat(result, is(notNullValue()));
         assertThat(result.getId(), is(notNullValue()));
-        assertThat(result.getUsername(), is("Stefan"));
-        assertThat(result.getPassword(), is("Lassard"));
+        assertThat(result.getUsername(), is(USERNAME));
+        assertThat(result.getPassword(), is(PASSWORD));
     }
 
     @Test
@@ -64,7 +69,7 @@ public class UserRepositoryIntegrationtest {
 
         assertThat(user, is(notNullValue()));
         assertThat(user.getId(), is(notNullValue()));
-        assertThat(user.getUsername(), is("Stefan"));
+        assertThat(user.getUsername(), is(USERNAME));
         assertThat(user.getPassword(), is("Butler"));
     }
 
@@ -80,6 +85,13 @@ public class UserRepositoryIntegrationtest {
     @Test
     public void deleteAll() {
         Iterable<User> userIterable = userRepository.findAll();
+
+
+        for (User user : userIterable) {
+            Address address = addressRepository.findByUser(user);
+            addressRepository.delete(address);
+        }
+
         userRepository.delete(userIterable);
 
         assertThat(userRepository.findAll().isEmpty(), is(true));

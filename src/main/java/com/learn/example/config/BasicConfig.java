@@ -60,7 +60,7 @@ public class BasicConfig {
 	        Properties properties = new Properties();  
 	        
 	        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");  // MySQL5InnoDBDialect   MySQLMyISAMDialect
-	        properties.put("hibernate.show_sql", "true");  
+	        properties.put("hibernate.show_sql", "false");
 	        return properties;  
 	}  
 	@Bean
